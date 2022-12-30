@@ -8,6 +8,7 @@ import login from "./login.js";
 import updateUserData from "./updateUserData.js";
 import getFavoritesTravels from "./getFavoritesTravels.js";
 import search from "./search.js";
+import getTravel from "./getTravel.js";
 
 const port = 8080;
 const app = express();
@@ -15,31 +16,32 @@ const app = express();
 app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.json());
 
-app.post("/signIn/", (req, res) => { //+
+app.post("/signIn/", (req, res) => {
+  //+
   const user = login(req, res);
-  console.log(user);
-  if (req.body.login && req.body.password) {
-    res.send(JSON.stringify(true));
-    console.log(req.body);
-  } else res.send(JSON.stringify(false));
+  res.send(JSON.stringify(user));
 });
 
-app.get("/profile/:id", (req, res) => { //+
+app.get("/profile/:id", (req, res) => {
+  //+
   getUserData(req, res);
   res.send(JSON.stringify("Получение profile по id юзера"));
 });
 
-app.post("/profile/:id", (req, res) => {  //++
+app.post("/profile/:id", (req, res) => {
+  //++
   updateUserData(req, res);
   res.send(JSON.stringify("Post profile по id юзера"));
 });
 
-app.get("/travel/:id", (req, res) => { //+
+app.get("/travel/:id", (req, res) => {
+  //+
   //Не нашел откуда вызывается. Но судя по описанию просто вернуть travel.
-  res.send(JSON.stringify("Получение travel по id"));
+  getTravel(req, res);
 });
 
-app.post("/travel", (req, res) => { //+
+app.post("/travel", (req, res) => {
+  //+
   createTravel(req, res);
   res.send(JSON.stringify(true));
 });
@@ -49,7 +51,6 @@ app.get("/future/:id", (req, res) => {
 });
 
 app.get("/history/:id", (req, res) => {
-  
   res.send(JSON.stringify(["Получение", "history"]));
 });
 
@@ -58,11 +59,13 @@ app.get("/favorites/:id", (req, res) => {
   res.send(JSON.stringify(["Получение", "favorites"]));
 });
 
-app.post("/search", (req, res) => { //+ Но лучше затестить 
+app.post("/search", (req, res) => {
+  //+ Но лучше затестить
   const result = search(req, res);
 });
 
-app.post("/signUp/", (req, res) => { //+
+app.post("/signUp/", (req, res) => {
+  //+
   registration(req);
 });
 
