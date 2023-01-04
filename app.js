@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 app.post("/signIn/", (req, res) => {
   //+
   const user = login(req, res);
-  res.send(JSON.stringify(user));
 });
 
 app.get("/profile/:id", (req, res) => {
