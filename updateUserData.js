@@ -9,7 +9,6 @@ export default async function updateUserData(req, res) {
   const collection = client.db("Project2022UrFu").collection("Users");
   const olduUserData = await collection.findOne({login: req.body.login});
   const user = new User(req.body);
-  console.log(user);
   //Api. То, что необходимо получить от клиента написано через req.query.        
   collection.updateOne({_id: olduUserData._id},{$set:{
     name: user.name != null ? user.name : olduUserData.name, //Возможно null заменить на undefainded
@@ -20,7 +19,8 @@ export default async function updateUserData(req, res) {
     num: user.num != null ? user.num : olduUserData.num,
     id: olduUserData.id,
     region: olduUserData.region,
-    password: olduUserData.password, 
+    password: olduUserData.password,
+    about: user.about != null ? user.about : olduUserData.about, 
 }});
   const updateUser = getUserData(req, res); //Скорее всего посыпеться, тк login передается в логин, а в логике getUserData login лежит в id 
   const updateUserJson = JSON.stringify(updateUser);
@@ -38,6 +38,7 @@ class User{
     this.id = body.id;
     this.region = body.region;
     this.password = body.password;
+    this.about = body.about;
   };
   login;
 }

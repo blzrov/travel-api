@@ -6,7 +6,6 @@ export default async function registration(req, res) {
   const client = new MongoClient(uri);
   await client.connect();
   const collection = client.db("Project2022UrFu").collection("Users");
-
   if (await loginUniquenessCheck(req.body.login, collection)) {
     const user = new User(req.body);
     let actualNew_myId = await getActualNewId(collection);
@@ -23,7 +22,8 @@ export default async function registration(req, res) {
     id: user.id,
     region: user.region,
     password: user.password,
-    favorites: user.favorites
+    favorites: user.favorites,
+    about: user.about
     });
     const userJson = JSON.stringify(user);
     return await userJson;
@@ -46,8 +46,8 @@ class User{
     this.login = body.login;
     this.password = body.password;
     this.favorites = [];
+    this.about = body.about;
   };
-  //password;
   login;
 }
 
@@ -64,3 +64,15 @@ async function getActualNewId(collection){
   )[0] + 1;
   return await newId;
 }
+
+// async function noNullCheck(body){
+//   let res = body.name != null 
+//   && body.surname != null
+//   && body.birth != null
+//   && body.sex != null
+//   && body.num != null
+//   && body.region != null
+//   && body.login != null
+//   && body.password != null;
+//   return res;
+// }

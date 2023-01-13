@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 
 export default async function getUserData(req, res) {
+  console.log("I'm here");
   const uri = "mongodb://localhost:27017";
   const client = new MongoClient(uri);
   await client.connect();

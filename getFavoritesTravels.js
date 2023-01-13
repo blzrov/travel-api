@@ -5,13 +5,11 @@ export default async function getFavoritesTravels(req, res) {
   const client = new MongoClient(uri);
   await client.connect();
   const collection = client.db("Project2022UrFu").collection("Travels");
-  console.log(req.body);
-  const user = await collection.findOne({login: req.body.id});         
-  const userJson = JSON.stringify(user);
-  console.log(userJson);
-  if(user == null){
+  const travel = await collection.findOne({login: req.body.id});         
+  const travelJson = JSON.stringify(travel);
+  if(travel == null){
     return false;
   }else{
-    return userJson;
+    return travelJson;
   }
 }

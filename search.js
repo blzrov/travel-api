@@ -11,7 +11,7 @@ export default async function search(req, res) {
   const allData = await collection.find().toArray();
   const travels = await getActualData(travelParameters, new Set(allData)); 
   const travelsJson = JSON.stringify(travels);
-  //console.log(travelsJson);
+  console.log(travelsJson);
   res.send(travelsJson);
 }
 
@@ -19,8 +19,8 @@ class TravelParameters{
   constructor(body)
   {
     this.region = body.region != '' ? body.region : null;
-    this.start = body.start != '' && body.start != null ? body.start : null;
-    this.finish = body.finish != '' && body.finish != null ? body.finish : null;
+    this.start = body.start != '' && body.start != null ? new Date(body.start) : null;
+    this.finish = body.finish != '' && body.finish != null ? new Date(body.finish) : null;
     this.longMin = body.longMin != '' && body.longMin != null ? Number(body.longMin) : null ; 
     this.longMax = body.longMax != '' && body.longMax != null ? Number(body.longMax) : null ; 
     this.costMin = body.costMin != '' && body.costMin != null ? Number(body.costMin) : null ;
@@ -40,13 +40,32 @@ async function getActualData(travelParameters, allData)
         actualData = new Set();
     }
 
-    if(travelParameters.start !== null){
-        
+    if(travelParameters.start !== null && travelParameters.finish !== null){     
+        allData.forEach(element => {
+            if(element.start > travelParameters.start && element.finish <= travelParameters.finish){
+                actualData.add(element);
+            }    
+        });
+        allData = actualData;
+        actualData = new Set();    
+    } else if(travelParameters.start !== null){
+        allData.forEach(element => {
+            if(element.start > travelParameters.start){
+                actualData.add(element);
+            }    
+        });
+        allData = actualData;
+        actualData = new Set(); 
+    } else if(travelParameters.finish !== null){
+        allData.forEach(element => {
+            if(element.finish <= travelParameters.finish){
+                actualData.add(element);
+            }    
+        });
+        allData = actualData;
+        actualData = new Set(); 
     }
 
-    if(travelParameters.finish !== null){
-
-    }
 
     if(travelParameters.longMin !== null){
         allData.forEach(element => {

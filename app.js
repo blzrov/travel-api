@@ -8,6 +8,7 @@ import login from "./login.js";
 import updateUserData from "./updateUserData.js";
 import getFavoritesTravels from "./getFavoritesTravels.js";
 import search from "./search.js";
+import setFavorite from "./setFavorite.js";
 
 const port = 8080;
 const app = express();
@@ -16,11 +17,8 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.json());
 
 app.post("/signIn/", (req, res) => { //+
-  const user = login(req, res);
-  console.log(user);
   if (req.body.login && req.body.password) {
     res.send(JSON.stringify(true));
-    console.log(req.body);
   } else res.send(JSON.stringify(false));
 });
 
@@ -31,6 +29,7 @@ app.get("/profile/:id", (req, res) => { //+
 
 app.post("/profile/:id", (req, res) => {  //++
   updateUserData(req, res);
+  console.log("I am here!");
   res.send(JSON.stringify("Post profile по id юзера"));
 });
 
@@ -58,12 +57,16 @@ app.get("/favorites/:id", (req, res) => {
   res.send(JSON.stringify(["Получение", "favorites"]));
 });
 
-app.post("/search", (req, res) => { //+ Но лучше затестить 
+app.post("/search", (req, res) => { //+ 
   const result = search(req, res);
 });
 
 app.post("/signUp/", (req, res) => { //+
   registration(req);
+});
+
+app.post("/setFavorite/", (req, res) => {
+  setFavorite(req, res);
 });
 
 app.listen(port, () => {

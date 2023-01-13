@@ -1,6 +1,5 @@
 import { MongoClient } from "mongodb";
 
-    //Добавляет в базу но не отсылает ответ клиенту
 export default async function createTravel(req, res) {
   const uri = "mongodb://localhost:27017";
   const client = new MongoClient(uri);
@@ -26,7 +25,12 @@ export default async function createTravel(req, res) {
     countday: travel.countday,
     description: travel.description,
     cost: travel.cost,
-    status: travel.status
+    status: travel.status,
+    seats: travel.seats,
+    items: travel.items,
+    seatsIsTaken: travel.seatsIsTaken,
+    canJoin: travel.canJoin,
+    media: travel.media
   });
   const travelJson = JSON.stringify(travel);
   return travelJson;
@@ -45,12 +49,17 @@ class Travel{
     this.organizer = body.organizer;
     this.organizer_Id = "Нужно получить id пользователя"; 
     this.guide = body.guide;
-    this.start = body.start;
-    this.finish = body.finish;
+    this.start = new Date(body.start);
+    this.finish = new Date(body.finish);
     this.countday = getCountDay(body.start, body.finish);
     this.description = body.description;
     this.cost = Number(body.cost);
     this.status = "open";
+    this.seats = Number(body.seats);
+    this.items = body.items;
+    this.seatsIsTaken = 0;
+    this.canJoin = true,
+    this.media = body.media
   };
   id;
 }
