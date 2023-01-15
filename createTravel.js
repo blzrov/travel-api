@@ -30,7 +30,8 @@ export default async function createTravel(req, res) {
     items: travel.items,
     seatsIsTaken: travel.seatsIsTaken,
     canJoin: travel.canJoin,
-    media: travel.media
+    media: travel.media,
+    members: travel.members
   });
   const travelJson = JSON.stringify(travel);
   return travelJson;
@@ -59,7 +60,8 @@ class Travel{
     this.items = body.items;
     this.seatsIsTaken = 0;
     this.canJoin = true,
-    this.media = body.media
+    this.media = body.media,
+    this.members = []; 
   };
   id;
 }

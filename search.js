@@ -2,16 +2,20 @@ import { MongoClient } from "mongodb";
 import getUserData from "./getUserData.js";
 import bcrypt from "bcryptjs";
 //Макет. Доделать.
-export default async function search(req, res) {
+export default async function search(req, res) {  
+    console.log(req.body);
   const uri = "mongodb://localhost:27017";
   const client = new MongoClient(uri);
   await client.connect();
   const collection = client.db("Project2022UrFu").collection("Travels");
+  const collectionUsers = client.db("Project2022UrFu").collection("Users");
   const travelParameters = new TravelParameters(req.body);  
   const allData = await collection.find().toArray();
-  const travels = await getActualData(travelParameters, new Set(allData)); 
-  const travelsJson = JSON.stringify(travels);
-  console.log(travelsJson);
+  const user = await collectionUsers.findOne({login: req.body.login});
+  const travels = await getActualData(travelParameters, new Set(allData));
+  
+  const result = checkFavorites(travels, user); 
+  const travelsJson = JSON.stringify(result); //travels на result
   res.send(travelsJson);
 }
 
@@ -107,4 +111,24 @@ async function getActualData(travelParameters, allData)
         actualData = new Set();
     }
     return [...allData];
+}
+
+function checkFavorites(actualTravels, user){
+    actualTravels.forEach(actualTravel => {
+        if(user.favorites.includes(actualTravel.id)){
+            actualTravel.isFavorite = true;
+        }
+        else{
+            actualTravel.isFavorite = false;    
+        }
+            
+        
+        // actualTravel.isFavorite = false;    
+        // user.favorites.forEach(favoriteTravel => {
+        //     if(actualTravel.id === favoriteTravel.id){
+        //         actualTravel.isFavorite = true;          
+        //     }    
+        // });        
+    });
+    return actualTravels; //Проверить потом, мэйби можно и не возвращать, все таки ссылочный тип
 }

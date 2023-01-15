@@ -9,6 +9,8 @@ import updateUserData from "./updateUserData.js";
 import getFavoritesTravels from "./getFavoritesTravels.js";
 import search from "./search.js";
 import setFavorite from "./setFavorite.js";
+import getTravel from "./getTravel.js";
+import joinTravel from "./joinTravel.js";
 
 const port = 8080;
 const app = express();
@@ -31,13 +33,11 @@ app.get("/profile/:id", (req, res) => {
 app.post("/profile/:id", (req, res) => {
   //++
   updateUserData(req, res);
-  console.log("I am here!");
   res.send(JSON.stringify("Post profile по id юзера"));
 });
 
 app.get("/travel/:id", (req, res) => {
   //+
-  //Не нашел откуда вызывается. Но судя по описанию просто вернуть travel.
   getTravel(req, res);
 });
 
@@ -55,7 +55,7 @@ app.get("/history/:id", (req, res) => {
   res.send(JSON.stringify(["Получение", "history"]));
 });
 
-app.get("/favorites/:id", (req, res) => {
+app.get("/favorites/:login", (req, res) => {
   getFavoritesTravels(req, res);
   res.send(JSON.stringify(["Получение", "favorites"]));
 });
@@ -72,6 +72,10 @@ app.post("/signUp/", (req, res) => {
 app.post("/setFavorite/", (req, res) => {
   setFavorite(req, res);
 });
+
+app.post("/joinTravel/", (req, res) => {
+  joinTravel(req, res);
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
