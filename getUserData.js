@@ -5,12 +5,13 @@ export default async function getUserData(req, res) {
   const client = new MongoClient(uri);
   await client.connect();
   const collection = client.db("Project2022UrFu").collection("Users");
-  const user = await collection.findOne({login: req.params.id});         
+  const user = await collection.findOne({ login: req.params.id });
   const userJson = JSON.stringify(user);
   console.log(userJson);
-  if(user == null){
+  res.send(userJson ? userJson : false);
+  if (user == null) {
     return false;
-  }else{
+  } else {
     return userJson;
   }
 }
