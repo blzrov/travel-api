@@ -4,7 +4,6 @@ export default async function createTravel(req, res) {
   const uri = "mongodb://localhost:27017";
   const client = new MongoClient(uri);
   await client.connect();
-  console.log(req.body);
   const collection = client.db("Project2022UrFu").collection("Travels");
   if(await loginUniquenessCheck(req.body.name, collection)) {
     const travel = new Travel(req.body);    

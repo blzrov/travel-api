@@ -23,7 +23,8 @@ export default async function registration(req, res) {
     region: user.region,
     password: user.password,
     favorites: user.favorites,
-    about: user.about
+    about: user.about,
+    travels: user.travels
     });
     const userJson = JSON.stringify(user);
     return await userJson;
@@ -47,6 +48,7 @@ class User{
     this.password = body.password;
     this.favorites = [];
     this.about = body.about;
+    this.travels = [];
   };
   login;
 }

@@ -20,8 +20,11 @@ export default async function joinTravel(req, res) {
             travel.canJoin = false;
         }
         if(!userInMembers){
-            const a = await collectionTravels.updateOne({id: req.body.id}, {$push: {members: { login: user.login}}, $inc: {seatsIsTaken: 1}, $set: {canJoin: travel.canJoin}});
-            console.log(a);
+            await collectionTravels.updateOne({id: req.body.id}, {$push: {members: { login: user.login}}, $inc: {seatsIsTaken: 1}, $set: {canJoin: travel.canJoin}});
+            await collectionUsers.updateOne({login: req.body.loginContext}, {$push: {travels: travel.id}});
         }
+
+        
+
     }
 }

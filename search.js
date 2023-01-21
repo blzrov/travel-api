@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 import getUserData from "./getUserData.js";
 import bcrypt from "bcryptjs";
+import replaceStatusTravels from "./replaceStatusTravels.js";
 //Макет. Доделать.
 export default async function search(req, res) {  
-    console.log(req.body);
   const uri = "mongodb://localhost:27017";
   const client = new MongoClient(uri);
   await client.connect();
@@ -17,6 +17,10 @@ export default async function search(req, res) {
   const result = checkFavorites(travels, user); 
   const travelsJson = JSON.stringify(result); //travels на result
   res.send(travelsJson);
+
+  //Обновляем статусы travels
+  replaceStatusTravels(allData);
+
 }
 
 class TravelParameters{

@@ -48,16 +48,17 @@ app.post("/travel", (req, res) => {
 });
 
 app.get("/future/:id", (req, res) => {
+  console.log("furure");
   res.send(JSON.stringify(["Получение", "future"]));
 });
 
 app.get("/history/:id", (req, res) => {
+  console.log("history");
   res.send(JSON.stringify(["Получение", "history"]));
 });
 
 app.get("/favorites/:login", (req, res) => {
   getFavoritesTravels(req, res);
-  res.send(JSON.stringify(["Получение", "favorites"]));
 });
 
 app.post("/search", (req, res) => { //+ 
