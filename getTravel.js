@@ -1,7 +1,6 @@
 import { MongoClient } from "mongodb";
 
 export default async function getUserData(req, res) {
-  let usersLogins = [];
   const uri = "mongodb://localhost:27017";
   const client = new MongoClient(uri);
   await client.connect();
@@ -17,12 +16,8 @@ export default async function getUserData(req, res) {
   // }
 
   //Расскоментить кода в params будет login
-  travel.members.forEach((member) => {
-    usersLogins.push(member.login);
-  });
   const users = await collectionUsers.find({ travels: travel.id }).toArray();
   travel.members = users;
   const result = JSON.stringify(travel);
-  console.log(result);
   res.send(result || false);
 }

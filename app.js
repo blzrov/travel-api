@@ -11,6 +11,7 @@ import search from "./search.js";
 import setFavorite from "./setFavorite.js";
 import getTravel from "./getTravel.js";
 import joinTravel from "./joinTravel.js";
+import getFutureHistoryTravels from "./getFutureHistoryTravels.js";
 
 const port = 8080;
 const app = express();
@@ -47,22 +48,20 @@ app.post("/travel", (req, res) => {
   res.send(JSON.stringify(true));
 });
 
-app.get("/future/:id", (req, res) => {
-  console.log("furure");
-  res.send(JSON.stringify(["Получение", "future"]));
+app.get("/future/:id", (req, res) => {//+
+  getFutureHistoryTravels(req, res, "open");
 });
 
 app.get("/history/:id", (req, res) => {
-  console.log("history");
-  res.send(JSON.stringify(["Получение", "history"]));
+  getFutureHistoryTravels(req, res, "closed");
 });
 
-app.get("/favorites/:login", (req, res) => {
+app.get("/favorites/:login", (req, res) => {//+
   getFavoritesTravels(req, res);
 });
 
 app.post("/search", (req, res) => { //+ 
-  const result = search(req, res);
+  search(req, res);
 });
 
 app.post("/signUp/", (req, res) => {
@@ -70,11 +69,11 @@ app.post("/signUp/", (req, res) => {
   registration(req);
 });
 
-app.post("/setFavorite/", (req, res) => {
+app.post("/setFavorite/", (req, res) => { //+
   setFavorite(req, res);
 });
 
-app.post("/joinTravel/", (req, res) => {
+app.post("/joinTravel/", (req, res) => {//+
   joinTravel(req, res);
 })
 

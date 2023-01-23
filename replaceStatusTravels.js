@@ -10,7 +10,8 @@ export default async function replaceStatusTravels(allData) {
   allData.forEach(travel => {
     if(travel.finish < now){
         collection.updateOne({id: travel.id},{$set:{
-            status: "closed"
+            status: "closed",
+            canJoin: false
         }});
     }  
   });

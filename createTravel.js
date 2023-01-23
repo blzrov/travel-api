@@ -30,7 +30,10 @@ export default async function createTravel(req, res) {
     seatsIsTaken: travel.seatsIsTaken,
     canJoin: travel.canJoin,
     media: travel.media,
-    members: travel.members
+    members: travel.members,
+    reviews: travel.reviews
+
+
   });
   const travelJson = JSON.stringify(travel);
   return travelJson;
@@ -61,6 +64,7 @@ class Travel{
     this.canJoin = true,
     this.media = body.media,
     this.members = []; 
+    this.reviews = [];
   };
   id;
 }
