@@ -6,17 +6,20 @@ export default async function getFavoritesTravels(req, res) {
   await client.connect();
   const collectionUsers = client.db("Project2022UrFu").collection("Users");
   const collectionTravels = client.db("Project2022UrFu").collection("Travels");
-  const user = await collectionUsers.findOne({login: req.params.login});
-  const travels = await collectionTravels.find({id: {$in : user.favorites}}).toArray();
-  travels.forEach(element => {
+  const user = await collectionUsers.findOne({ login: req.params.login });
+  const travels = await collectionTravels
+    .find({ id: { $in: user.favorites } })
+    .toArray();
+  travels.forEach((element) => {
     element.isFavorite = true;
-  });         
+  });
   const travelJson = JSON.stringify(travels);
   res.send(travelJson || false);
   console.log(travelJson);
-  if(user == null){
+  res.send(travelJson || false);
+  if (user == null) {
     return false;
-  }else{
+  } else {
     return travelJson;
   }
 }

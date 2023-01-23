@@ -5,11 +5,11 @@ export default async function createTravel(req, res) {
   const client = new MongoClient(uri);
   await client.connect();
   const collection = client.db("Project2022UrFu").collection("Travels");
-  if(await loginUniquenessCheck(req.body.name, collection)) {
-    const travel = new Travel(req.body);    
+  if (await loginUniquenessCheck(req.body.name, collection)) {
+    const travel = new Travel(req.body);
     let actualNew_myId = await getActualNewId(collection);
     travel.id = actualNew_myId;
-         
+
     collection.insertOne({
     name: travel.name,
     region: travel.region,
@@ -42,15 +42,14 @@ export default async function createTravel(req, res) {
   }
 }
 
-class Travel{
-  constructor(body)
-  {
+class Travel {
+  constructor(body) {
     this.name = body.name;
     this.region = body.region;
     this.place = body.place;
     this.placeDescription = body.placeDescription;
     this.organizer = body.organizer;
-    this.organizer_Id = "Нужно получить id пользователя"; 
+    this.organizer_Id = "Нужно получить id пользователя";
     this.guide = body.guide;
     this.start = new Date(body.start);
     this.finish = new Date(body.finish);
@@ -69,12 +68,13 @@ class Travel{
   id;
 }
 
-async function getActualNewId(collection){
-  const newId = (await collection.find().sort({ id: -1 }).limit(1).toArray()).map(
-    function (u) {
+async function getActualNewId(collection) {
+  const newId =
+    (await collection.find().sort({ id: -1 }).limit(1).toArray()).map(function (
+      u
+    ) {
       return u.id;
-    }
-  )[0] + 1;
+    })[0] + 1;
   return await newId;
 }
 
@@ -83,9 +83,9 @@ async function loginUniquenessCheck(newName, collection) {
   return !loginInBd;
 }
 
-function getCountDay(start, finish){
+function getCountDay(start, finish) {
   const startDate = new Date(start).getTime();
   const finishDate = new Date(finish).getTime();
-  const countDay = (finishDate - startDate) / (1000*60*60*24);
-  return countDay; 
+  const countDay = (finishDate - startDate) / (1000 * 60 * 60 * 24);
+  return countDay;
 }

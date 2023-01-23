@@ -19,16 +19,14 @@ const app = express();
 app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.json());
 
-app.post("/signIn/", (req, res) => { //+
-  if (req.body.login && req.body.password) {
-    res.send(JSON.stringify(true));
-  } else res.send(JSON.stringify(false));
+app.post("/signIn/", (req, res) => {
+  //+
+  const user = login(req, res);
 });
 
 app.get("/profile/:id", (req, res) => {
   //+
   getUserData(req, res);
-  res.send(JSON.stringify("Получение profile по id юзера"));
 });
 
 app.post("/profile/:id", (req, res) => {
@@ -39,13 +37,13 @@ app.post("/profile/:id", (req, res) => {
 
 app.get("/travel/:id", (req, res) => {
   //+
+  console.log(req.query.login);
   getTravel(req, res);
 });
 
 app.post("/travel", (req, res) => {
   //+
   createTravel(req, res);
-  res.send(JSON.stringify(true));
 });
 
 app.get("/future/:id", (req, res) => {//+
@@ -75,7 +73,7 @@ app.post("/setFavorite/", (req, res) => { //+
 
 app.post("/joinTravel/", (req, res) => {//+
   joinTravel(req, res);
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
