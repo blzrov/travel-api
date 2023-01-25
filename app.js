@@ -12,6 +12,7 @@ import setFavorite from "./setFavorite.js";
 import getTravel from "./getTravel.js";
 import joinTravel from "./joinTravel.js";
 import getFutureHistoryTravels from "./getFutureHistoryTravels.js";
+import getFullUser from "./getFullUser";
 
 const port = 8080;
 const app = express();
@@ -74,6 +75,11 @@ app.post("/setFavorite/", (req, res) => { //+
 app.post("/joinTravel/", (req, res) => {//+
   joinTravel(req, res);
 });
+
+app.get("/getFullUser/:id", (req, res) => {//+
+  getFullUser(req, res);
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
