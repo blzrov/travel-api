@@ -12,7 +12,8 @@ import setFavorite from "./setFavorite.js";
 import getTravel from "./getTravel.js";
 import joinTravel from "./joinTravel.js";
 import getFutureHistoryTravels from "./getFutureHistoryTravels.js";
-import getFullUser from "./getFullUser";
+import getFullUser from "./getFullUser.js";
+import youAreOranize from "./youAreOrganize.js";
 
 const port = 8080;
 const app = express();
@@ -80,6 +81,9 @@ app.get("/getFullUser/:id", (req, res) => {//+
   getFullUser(req, res);
 });
 
+app.get("/myCreatedTravels/:id", (req, res) => {
+  youAreOranize(req, res);
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
