@@ -27,4 +27,5 @@ export default async function joinTravel(req, res) {
         
 
     }
+    res.send(true)
 }

@@ -14,6 +14,7 @@ import joinTravel from "./joinTravel.js";
 import getFutureHistoryTravels from "./getFutureHistoryTravels.js";
 import getFullUser from "./getFullUser.js";
 import youAreOranize from "./youAreOrganize.js";
+import leaveFeedback from "./leaveFeedback.js";
 
 const port = 8080;
 const app = express();
@@ -24,6 +25,11 @@ app.use(bodyParser.json());
 app.post("/signIn/", (req, res) => {
   //+
   const user = login(req, res);
+});
+
+app.post("/leaveFeedback/", (req, res) => {
+  //+
+  leaveFeedback(req, res);
 });
 
 app.get("/profile/:id", (req, res) => {
@@ -48,7 +54,8 @@ app.post("/travel", (req, res) => {
   createTravel(req, res);
 });
 
-app.get("/future/:id", (req, res) => {//+
+app.get("/future/:id", (req, res) => {
+  //+
   getFutureHistoryTravels(req, res, "open");
 });
 
@@ -56,11 +63,13 @@ app.get("/history/:id", (req, res) => {
   getFutureHistoryTravels(req, res, "closed");
 });
 
-app.get("/favorites/:login", (req, res) => {//+
+app.get("/favorites/:login", (req, res) => {
+  //+
   getFavoritesTravels(req, res);
 });
 
-app.post("/search", (req, res) => { //+ 
+app.post("/search", (req, res) => {
+  //+
   search(req, res);
 });
 
@@ -69,15 +78,18 @@ app.post("/signUp/", (req, res) => {
   registration(req);
 });
 
-app.post("/setFavorite/", (req, res) => { //+
+app.post("/setFavorite/", (req, res) => {
+  //+
   setFavorite(req, res);
 });
 
-app.post("/joinTravel/", (req, res) => {//+
+app.post("/joinTravel/", (req, res) => {
+  //+
   joinTravel(req, res);
 });
 
-app.get("/getFullUser/:id", (req, res) => {//+
+app.get("/getFullUser/:id", (req, res) => {
+  //+
   getFullUser(req, res);
 });
 

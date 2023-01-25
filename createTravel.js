@@ -35,7 +35,8 @@ export default async function createTravel(req, res) {
 
 
   });
-  const travelJson = JSON.stringify(travel);
+  const travelJson = JSON.stringify(travel.id);
+  res.send(travelJson)
   return travelJson;
   } else {
     return false;

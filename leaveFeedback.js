@@ -7,6 +7,6 @@ export default async function leaveFeedback(req, res, stat) {
   const collectionTravels = client.db("Project2022UrFu").collection("Travels");
   const collectionUsers = client.db("Project2022UrFu").collection("Users");
   const user = await collectionUsers.findOne({login: req.body.login});
-  await collectionTravels.updateOne({id: req.body.id}, {$push: {reviews: {name: user.name, surname: user.surname, reviews: req.body.review}}});
+  await collectionTravels.updateOne({id: req.body.id}, {$push: {reviews: {name: user.name, surname: user.surname, reviews: req.body.reviews}}});
   res.send(true);
 }

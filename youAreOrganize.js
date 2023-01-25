@@ -6,16 +6,16 @@ export default async function youAreOranize(req, res) {
   await client.connect();
   const collectionUsers = client.db("Project2022UrFu").collection("Users");
   const collectionTravels = client.db("Project2022UrFu").collection("Travels");
-  const user = await collectionUsers.findOne({ login: req.params.login });
+  console.log(req.params.id)
+  const user = await collectionUsers.findOne({ login: req.params.id });
+  console.log(user)
   const travels = await collectionTravels
-    .find({ organizer: { $in: user.name } })
+    .find({ organizer: { $in: user.login } })
     .toArray();
   travels.forEach((element) => {
     element.isFavorite = true;
   });
   const travelJson = JSON.stringify(travels);
-  res.send(travelJson || false);
-  console.log(travelJson);
   res.send(travelJson || false);
   if (user == null) {
     return false;

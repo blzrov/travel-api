@@ -15,8 +15,6 @@ export default async function getFavoritesTravels(req, res) {
   });
   const travelJson = JSON.stringify(travels);
   res.send(travelJson || false);
-  console.log(travelJson);
-  res.send(travelJson || false);
   if (user == null) {
     return false;
   } else {
