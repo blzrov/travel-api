@@ -5,8 +5,10 @@ export default async function getFullUser(req, res) {
   const client = new MongoClient(uri);
   await client.connect();
   const collectionUsers = client.db("Project2022UrFu").collection("Users");
-  const user = await collectionUsers.findOne({ id: req.params.id });
-  const userJson = JSON.stringify(truseravels);
+  console.log(req.params.id)
+  const user = await collectionUsers.findOne({ login: req.params.id });
+  console.log(user)
+  const userJson = JSON.stringify(user);
   res.send(userJson || false);
   if (user == null) {
     return false;
